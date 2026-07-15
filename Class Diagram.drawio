@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="Page-1" id="FNibRdnihXS_5CbdJ--6">
-    <mxGraphModel dx="1245" dy="1768" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1437" dy="1871" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -56,7 +56,7 @@
           <mxGeometry height="30" width="140" y="120" as="geometry" />
         </mxCell>
         <mxCell id="_xLJ7-DKVpqls_R4hrHa-23" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Nilai" vertex="1">
-          <mxGeometry height="150" width="140" x="520" y="310" as="geometry" />
+          <mxGeometry height="150" width="140" x="480" y="310" as="geometry" />
         </mxCell>
         <mxCell id="_xLJ7-DKVpqls_R4hrHa-24" parent="_xLJ7-DKVpqls_R4hrHa-23" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="Nilai Tugas" vertex="1">
           <mxGeometry height="30" width="140" y="30" as="geometry" />
@@ -80,7 +80,7 @@
           <mxGeometry height="30" width="140" y="60" as="geometry" />
         </mxCell>
         <mxCell id="_xLJ7-DKVpqls_R4hrHa-35" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Hasil Pembelajaran" vertex="1">
-          <mxGeometry height="120" width="140" x="520" y="170" as="geometry" />
+          <mxGeometry height="120" width="140" x="480" y="170" as="geometry" />
         </mxCell>
         <mxCell id="_xLJ7-DKVpqls_R4hrHa-36" parent="_xLJ7-DKVpqls_R4hrHa-35" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="Mata Pelajaran" vertex="1">
           <mxGeometry height="30" width="140" y="30" as="geometry" />
