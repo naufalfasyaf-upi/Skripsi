@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siswa Portfolio</title>
+    <title>Siswa Analisis</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans antialiased flex h-screen overflow-hidden">
@@ -42,46 +42,46 @@
 
         <div class="flex-1 bg-[#dcdcdc] p-8 m-8 rounded-lg flex flex-col">
             
-            <!-- Dropdown Filter -->
             <div class="mb-6">
                 <select class="border border-gray-400 rounded px-4 py-2 bg-white text-sm font-semibold shadow-sm focus:outline-none">
-                    <option value="Semester 1" {{ $semester == 'Semester 1' ? 'selected' : '' }}>Semester 1</option>
-                    <option value="Semester 2" {{ $semester == 'Semester 2' ? 'selected' : '' }}>Semester 2</option>
+                    <option value="Seluruh Pelajaran">Seluruh Pelajaran</option>
                 </select>
             </div>
 
-            <!-- Dark Data Table -->
             <div class="bg-[#383838] rounded-md overflow-hidden shadow-lg border border-gray-600">
                 <table class="w-full text-left border-collapse text-white text-sm">
                     <thead>
                         <tr class="bg-[#4a4a4a]">
                             <th class="p-3 border border-gray-600 font-semibold w-12 text-center">No</th>
                             <th class="p-3 border border-gray-600 font-semibold">Mata Pelajaran</th>
-                            <th class="p-3 border border-gray-600 font-semibold w-24 text-center">Nilai Tugas</th>
-                            <th class="p-3 border border-gray-600 font-semibold w-24 text-center">Nilai UTS</th>
-                            <th class="p-3 border border-gray-600 font-semibold w-24 text-center">Nilai UAS</th>
-                            <th class="p-3 border border-gray-600 font-semibold w-24 text-center">Nilai Akhir</th>
+                            <th class="p-3 border border-gray-600 font-semibold w-24 text-center">Semester 1</th>
+                            <th class="p-3 border border-gray-600 font-semibold w-24 text-center">Semester 2</th>
+                            <th class="p-3 border border-gray-600 font-semibold w-24 text-center">Semester 3</th>
+                            <th class="p-3 border border-gray-600 font-semibold w-24 text-center">Semester 4</th>
+                            <th class="p-3 border border-gray-600 font-semibold w-24 text-center">Semester 5</th>
+                            <th class="p-3 border border-gray-600 font-semibold w-28 text-center">Performa</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($student->grades as $index => $grade)
+                        @php $index = 1; @endphp
+                        @foreach($analisisData as $data)
                         <tr class="hover:bg-[#454545] transition-colors">
-                            <td class="p-3 border border-gray-600 text-center">{{ $index + 1 }}</td>
-                            <td class="p-3 border border-gray-600">{{ $grade->mata_pelajaran }}</td>
-                            <td class="p-3 border border-gray-600 text-center">{{ $grade->nilai_tugas }}</td>
-                            <td class="p-3 border border-gray-600 text-center">{{ $grade->nilai_uts }}</td>
-                            <td class="p-3 border border-gray-600 text-center">{{ $grade->nilai_uas }}</td>
-                            <td class="p-3 border border-gray-600 text-center font-bold">{{ $grade->nilai_akhir }}</td>
+                            <td class="p-3 border border-gray-600 text-center">{{ $index++ }}</td>
+                            <td class="p-3 border border-gray-600">{{ $data['mata_pelajaran'] }}</td>
+                            <td class="p-3 border border-gray-600 text-center">{{ $data['semester_1'] }}</td>
+                            <td class="p-3 border border-gray-600 text-center">{{ $data['semester_2'] }}</td>
+                            <td class="p-3 border border-gray-600 text-center">{{ $data['semester_3'] }}</td>
+                            <td class="p-3 border border-gray-600 text-center">{{ $data['semester_4'] }}</td>
+                            <td class="p-3 border border-gray-600 text-center">{{ $data['semester_5'] }}</td>
+                            <td class="p-3 border border-gray-600 text-center font-bold text-green-400">{{ $data['performa'] }}</td>
                         </tr>
-                        @empty
-                        <tr>
-                            <td colspan="6" class="p-4 text-center text-gray-400 border border-gray-600">Belum ada data nilai untuk semester ini.</td>
-                        </tr>
-                        @endforelse
+                        @endforeach
                         
                         <!-- Empty rows filler to match the Figma visual design height -->
-                        @for ($i = 0; $i < (10 - count($student->grades)); $i++)
+                        @for ($i = 0; $i < (12 - count($analisisData)); $i++)
                         <tr>
+                            <td class="p-5 border border-gray-600"></td>
+                            <td class="p-5 border border-gray-600"></td>
                             <td class="p-5 border border-gray-600"></td>
                             <td class="p-5 border border-gray-600"></td>
                             <td class="p-5 border border-gray-600"></td>

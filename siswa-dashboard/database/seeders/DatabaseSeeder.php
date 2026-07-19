@@ -49,5 +49,28 @@ class DatabaseSeeder extends Seeder
             'nilai_uas' => 80,
             'nilai_akhir' => 80
         ]);
+
+        // ... (your existing Semester 1 grades) ...
+
+        Grade::create([
+            'student_id' => $student->id,
+            'semester' => 'Semester 2',
+            'mata_pelajaran' => 'Matematika',
+            'nilai_tugas' => 88, 'nilai_uts' => 85, 'nilai_uas' => 90, 'nilai_akhir' => 88
+        ]);
+
+        Grade::create([
+            'student_id' => $student->id,
+            'semester' => 'Semester 3',
+            'mata_pelajaran' => 'Matematika',
+            'nilai_tugas' => 90, 'nilai_uts' => 92, 'nilai_uas' => 95, 'nilai_akhir' => 92
+        ]);
+        
+        Grade::create([
+            'student_id' => $student->id,
+            'semester' => 'Semester 2',
+            'mata_pelajaran' => 'Fisika',
+            'nilai_tugas' => 80, 'nilai_uts' => 85, 'nilai_uas' => 82, 'nilai_akhir' => 82
+        ]);
     }
 }
