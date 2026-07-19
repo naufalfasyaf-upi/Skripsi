@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash; // Add this
 use App\Models\Student;
 use App\Models\Attendance;
 use App\Models\Grade;
+use App\Models\Admin;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,6 +16,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // 0. Create the Admin User
+        Admin::create([
+            'name' => 'Super Admin',
+            'username' => 'admin',
+            'password' => Hash::make('qweqwe')
+        ]);
+
         // 1. Create the Student (Dim Table)
         $student = Student::create([
             'nisn' => '1234567890', // Naufal's Username

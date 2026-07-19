@@ -5,6 +5,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\AnalisisController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+
+// Automatically redirect the root URL to the dashboard
+Route::redirect('/', '/dashboard');
 
 // 1. GUEST ROUTES (Only accessible if the user is NOT logged in)
 Route::middleware('guest')->group(function () {
@@ -17,12 +21,16 @@ Route::middleware('guest')->group(function () {
 
 // 2. AUTHENTICATED ROUTES (Only accessible if the user IS logged in)
 Route::middleware('auth')->group(function () {
-    // If an unauthenticated user tries to access these, Laravel automatically redirects them to the login page
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/portofolio', [PortfolioController::class, 'index'])->name('portofolio');
     Route::get('/analisis', [AnalisisController::class, 'index'])->name('analisis');
     
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+// 3. ADMIN ROUTES (Only accessible if the user is an admin)
+Route::prefix('admin')->middleware('auth:admin')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 });
 
 require __DIR__.'/settings.php';
