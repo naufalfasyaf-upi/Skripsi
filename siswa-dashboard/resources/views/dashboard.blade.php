@@ -18,11 +18,11 @@
         </div>
 
         <nav class="flex-1 px-8 space-y-6 mt-8">
-            <a href="#" class="flex items-center space-x-4 text-white hover:text-gray-300 font-bold text-lg">
+            <a href="{{ route('dashboard') }}" class="flex items-center space-x-4 text-white hover:text-gray-300 font-bold text-lg">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
                 <span>Beranda</span>
             </a>
-            <a href="#" class="flex items-center space-x-4 text-white hover:text-gray-300 font-bold text-lg">
+            <a href="{{ route('portofolio') }}" class="flex items-center space-x-4 text-white hover:text-gray-300 font-bold text-lg">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
                 <span>Portfolio</span>
             </a>
