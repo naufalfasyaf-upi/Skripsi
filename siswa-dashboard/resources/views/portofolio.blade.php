@@ -30,6 +30,13 @@
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
                 <span>Analisis</span>
             </a>
+            <form action="{{ route('logout') }}" method="POST" class="mt-8">
+                    @csrf
+                    <button type="submit" class="flex items-center space-x-4 text-red-400 hover:text-red-300 font-bold text-lg px-8">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+                        <span>Logout</span>
+                    </button>
+                </form>
         </nav>
     </aside>
 

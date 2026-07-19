@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash; // Add this
 use App\Models\Student;
 use App\Models\Attendance;
 use App\Models\Grade;
@@ -16,8 +17,12 @@ class DatabaseSeeder extends Seeder
     {
         // 1. Create the Student (Dim Table)
         $student = Student::create([
+            'nisn' => '1234567890', // Naufal's Username
+            'password' => Hash::make('password123'), // Naufal's Password
             'name' => 'Naufal Fasya Faddillah',
-            'class_name' => 'XII IPA 2'
+            'class_name' => 'XII IPA 2',
+            'birth_place' => 'Jakarta',
+            'birthdate' => '2008-05-15'
         ]);
 
         // 2. Create the Attendance Record (Fact Table)
