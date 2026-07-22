@@ -20,7 +20,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'authenticate'])->name('login.post');
 });
 
-// 2. AUTHENTICATED ROUTES (Only accessible if the user IS logged in)
+// 2. STUDENTS AUTHENTICATED ROUTES (Only accessible if the user IS logged in)
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/portofolio', [PortfolioController::class, 'index'])->name('portofolio');
@@ -40,5 +40,7 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::resource('siswa', StudentController::class)->names('admin.siswa');
     Route::resource('guru', \App\Http\Controllers\Admin\TeacherController::class)->names('admin.guru');
 });
+
+
 
 require __DIR__.'/settings.php';
