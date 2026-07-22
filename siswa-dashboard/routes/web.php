@@ -6,6 +6,7 @@ use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\AnalisisController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\StudentController;
 
 // Automatically redirect the root URL to the dashboard
 Route::redirect('/', '/dashboard');
@@ -31,6 +32,13 @@ Route::middleware('auth')->group(function () {
 // 3. ADMIN ROUTES (Only accessible if the user is an admin)
 Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    
+    // Add this new line to handle all CRUD routes automatically
+    Route::resource('siswa', StudentController::class)->names('admin.siswa');
+
+    // Inside your Route::prefix('admin') group:
+    Route::resource('siswa', StudentController::class)->names('admin.siswa');
+    Route::resource('guru', \App\Http\Controllers\Admin\TeacherController::class)->names('admin.guru');
 });
 
 require __DIR__.'/settings.php';

@@ -53,7 +53,7 @@
             </a>
 
             <!-- Siswa Card -->
-            <a href="#" class="bg-[#2a0a0a] text-white w-64 h-32 rounded-2xl p-5 shadow-lg hover:bg-[#3d1515] transition-all transform hover:-translate-y-1 flex flex-col">
+            <a href="{{ route('admin.siswa.index') }}" class="bg-[#2a0a0a] text-white w-64 h-32 rounded-2xl p-5 shadow-lg hover:bg-[#3d1515] transition-all transform hover:-translate-y-1 flex flex-col">
                 <span class="font-bold text-lg tracking-wide">Siswa</span>
             </a>
 
