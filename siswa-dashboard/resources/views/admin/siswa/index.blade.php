@@ -29,6 +29,15 @@
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M3 5v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.11 0-2 .9-2 2zm12 4c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zm-9 8c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1H6v-1z"/></svg>
                 <span>User</span>
             </a>
+            <form action="{{ route('logout') }}" method="POST" class="pt-6 mt-6 border-t border-[#4a4a4a] w-full">
+                @csrf
+                <button type="submit" class="flex items-center space-x-4 text-red-400 hover:text-red-300 font-bold text-lg transition-colors w-full text-left">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                    </svg>
+                    <span>Logout</span>
+                </button>
+            </form>
         </nav>
     </aside>
 
@@ -89,11 +98,13 @@
                             <td class="p-3 border border-gray-600 text-center">
                                 <a href="#" class="text-gray-300 hover:text-white transition-colors">Edit</a>
                             </td>
-                            <td class="p-3 border border-gray-600 text-center">
-                                <form action="{{ route('admin.siswa.destroy', $student->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus siswa ini?');">
+                            <td class="p-4 border border-gray-600 text-center">
+                                <form action="{{ route('admin.siswa.destroy', $student->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus siswa ini? Data yang dihapus tidak dapat dikembalikan.');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-gray-300 hover:text-red-400 transition-colors">Hapus</button>
+                                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 px-4 rounded transition-colors shadow-sm text-sm">
+                                        Hapus
+                                    </button>
                                 </form>
                             </td>
                         </tr>
