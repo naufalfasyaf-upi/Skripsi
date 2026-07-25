@@ -21,7 +21,7 @@ class AuthController extends Controller
         }
 
         // 2. Attempt Student Login (Matches 'username' input to the 'nisn' column)
-        if (Auth::guard('web')->attempt(['nisn' => $credentials['username'], 'password' => $credentials['password']])) {
+        if (Auth::guard('web')->attempt(['name' => $credentials['username'], 'password' => $credentials['password']])) {
             $request->session()->regenerate();
             return redirect()->route('dashboard');
         }

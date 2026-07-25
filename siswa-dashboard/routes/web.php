@@ -39,6 +39,7 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     // Inside your Route::prefix('admin') group:
     Route::resource('siswa', StudentController::class)->names('admin.siswa');
     Route::resource('guru', \App\Http\Controllers\Admin\TeacherController::class)->names('admin.guru');
+    Route::resource('kelas', \App\Http\Controllers\Admin\KelasController::class)->names('admin.kelas');
 });
 
 

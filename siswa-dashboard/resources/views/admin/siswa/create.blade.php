@@ -37,8 +37,13 @@
                     </div>
 
                     <div>
-                        <label class="block text-gray-700 font-bold mb-2">Kelas (contoh: XII IPA 2)</label>
-                        <input type="text" name="class_name" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2a0a0a]" required>
+                        <label class="block text-gray-700 font-bold mb-2">Kelas</label>
+                        <select name="class_name" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2a0a0a]" required>
+                            <option value="" disabled selected>-- Pilih Kelas --</option>
+                            @foreach($kelasList as $kelas)
+                                <option value="{{ $kelas->name }}">{{ $kelas->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div>
