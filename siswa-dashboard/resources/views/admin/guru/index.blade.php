@@ -21,7 +21,16 @@
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Beranda</span>
             </a>
             <a href="{{ route('admin.siswa.index') }}" class="flex items-center space-x-4 text-white font-bold text-lg transition-colors">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M3 5v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.11 0-2 .9-2 2zm12 4c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zm-9 8c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1H6v-1z"/></svg><span>User</span>
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M3 5v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.11 0-2 .9-2 2zm12 4c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zm-9 8c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1H6v-1z"/></svg>
+                <span>User</span>
+            </a>
+            <a href="{{ route('admin.kelas.index') }}" class="flex items-center space-x-4 text-white font-bold text-lg transition-colors">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+                <span>Kelas</span>
+            </a>
+            <a href="{{ route('admin.mapel.index') }}" class="flex items-center space-x-4 text-white font-bold text-lg transition-colors">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+                <span>Mata Pelajaran</span>
             </a>
             <form action="{{ route('logout') }}" method="POST" class="pt-6 mt-6 border-t border-[#4a4a4a] w-full">
                 @csrf
@@ -42,7 +51,12 @@
         </header>
 
         <div class="flex-1 bg-[#dcdcdc] p-8 m-8 mt-2 rounded-lg flex flex-col">
-
+            <!-- Success Message -->
+            @if(session('success'))
+                <div class="bg-green-500 text-white p-4 rounded mb-6 font-bold shadow-sm">
+                    {{ session('success') }}
+                </div>
+            @endif
             <!-- Top Controls -->
             <div class="flex gap-4 mb-8">
                 <!-- Dropdown with GURU selected -->
@@ -51,7 +65,7 @@
                     <option value="{{ route('admin.guru.index') }}" selected>Guru</option>
                 </select>
 
-                <a href="#" class="border border-black rounded px-6 py-1.5 bg-white text-black font-semibold hover:bg-gray-100 transition-colors shadow-sm flex items-center">
+                <a href="{{ route('admin.guru.create') }}" class="border border-black rounded px-6 py-1.5 bg-white text-black font-semibold hover:bg-gray-100 transition-colors shadow-sm flex items-center">
                     Tambah User (Guru)
                 </a>
             </div>
@@ -76,8 +90,20 @@
                             <td class="p-4 border border-gray-600">{{ $teacher->name }}</td>
                             <td class="p-4 border border-gray-600">{{ $teacher->nip }}</td>
                             <td class="p-4 border border-gray-600">{{ $teacher->subject }}</td>
-                            <td class="p-4 border border-gray-600 text-center"><a href="#" class="text-gray-300 hover:text-white">Edit</a></td>
-                            <td class="p-4 border border-gray-600 text-center"><a href="#" class="text-gray-300 hover:text-white">Hapus</a></td>
+                            <td class="p-4 border border-gray-600 text-center">
+                                <a href="{{ route('admin.guru.edit', $teacher->id) }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-5 rounded transition-colors shadow-sm text-sm inline-block">
+                                    Edit
+                                </a>
+                            </td>
+                            <td class="p-4 border border-gray-600 text-center">
+                                <form action="{{ route('admin.guru.destroy', $teacher->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus guru ini? Data yang dihapus tidak dapat dikembalikan.');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 px-4 rounded transition-colors shadow-sm text-sm">
+                                        Hapus
+                                    </button>
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                         
