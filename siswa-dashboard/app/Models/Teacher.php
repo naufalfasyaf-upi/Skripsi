@@ -15,4 +15,9 @@ class Teacher extends Authenticatable
     protected $hidden = [
         'password',
     ];
+    
+    public function kelas()
+    {
+        return $this->hasOne(Kelas::class, 'teacher_id');
+    }
 }

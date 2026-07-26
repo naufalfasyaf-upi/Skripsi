@@ -67,10 +67,21 @@
                 <form action="{{ route('admin.kelas.store') }}" method="POST" class="flex gap-4 items-end">
                     @csrf
                     <div class="flex-1">
-                        <label class="block text-gray-700 font-semibold mb-2">Nama Kelas (Contoh: XII IPA 1)</label>
-                        <input type="text" name="name" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2a0a0a]" required>
+                        <label class="block text-gray-700 font-semibold mb-2">Nama Kelas</label>
+                        <input type="text" name="name" placeholder="Contoh: XII IPA 1" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2a0a0a]" required>
                         @error('name') <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span> @enderror
                     </div>
+                    
+                    <div class="flex-1">
+                        <label class="block text-gray-700 font-semibold mb-2">Wali Kelas (Opsional)</label>
+                        <select name="teacher_id" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2a0a0a]">
+                            <option value="">-- Pilih Wali Kelas --</option>
+                            @foreach($teachers as $teacher)
+                                <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <button type="submit" class="bg-[#2a0a0a] text-white font-bold py-2 px-6 rounded hover:bg-[#3d1515] transition-colors h-[42px]">
                         Simpan
                     </button>
@@ -84,6 +95,7 @@
                         <tr class="bg-[#4a4a4a]">
                             <th class="p-4 border border-gray-600 font-semibold w-16 text-center">No</th>
                             <th class="p-4 border border-gray-600 font-semibold">Nama Kelas</th>
+                            <th class="p-4 border border-gray-600 font-semibold">Wali Kelas</th>
                             <th class="p-4 border border-gray-600 font-semibold w-32 text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -92,7 +104,16 @@
                         <tr class="hover:bg-[#454545] transition-colors">
                             <td class="p-4 border border-gray-600 text-center">{{ $index + 1 }}</td>
                             <td class="p-4 border border-gray-600 font-bold">{{ $kelas->name }}</td>
-                            <td class="p-4 border border-gray-600 text-center">
+                            <td class="p-4 border border-gray-600">
+                                {{ $kelas->waliKelas ? $kelas->waliKelas->name : 'Belum Ada' }}
+                            </td>
+                            <td class="p-4 border border-gray-600 text-center flex justify-center gap-2">
+                                <!-- Edit Button -->
+                                <a href="{{ route('admin.kelas.edit', $kelas->id) }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded transition-colors text-xs inline-block">
+                                    Edit
+                                </a>
+
+                                <!-- Delete Button -->
                                 <form action="{{ route('admin.kelas.destroy', $kelas->id) }}" method="POST" onsubmit="return confirm('Hapus kelas ini?');">
                                     @csrf
                                     @method('DELETE')
