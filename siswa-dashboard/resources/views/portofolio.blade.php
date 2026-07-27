@@ -13,8 +13,9 @@
             <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-6">
                 <svg class="w-16 h-16 text-[#2a0a0a]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
             </div>
-            <h2 class="text-xl font-bold text-center">{{ $student->name ?? 'Student Name' }}</h2>
-            <p class="text-sm text-gray-300 mt-2">{{ $student->class_name ?? 'Class' }}</p>
+            <!-- Updated to use auth()->user() to prevent undefined variable errors -->
+            <h2 class="text-xl font-bold text-center">{{ auth()->user()->name ?? 'Student Name' }}</h2>
+            <p class="text-sm text-gray-300 mt-2">{{ auth()->user()->class_name ?? 'Class' }}</p>
         </div>
 
         <nav class="flex-1 px-8 space-y-6 mt-8">
@@ -31,12 +32,12 @@
                 <span>Analisis</span>
             </a>
             <form action="{{ route('logout') }}" method="POST" class="mt-8">
-                    @csrf
-                    <button type="submit" class="flex items-center space-x-4 text-red-400 hover:text-red-300 font-bold text-lg px-8">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
-                        <span>Logout</span>
-                    </button>
-                </form>
+                @csrf
+                <button type="submit" class="flex items-center space-x-4 text-red-400 hover:text-red-300 font-bold text-lg px-8">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+                    <span>Logout</span>
+                </button>
+            </form>
         </nav>
     </aside>
 
@@ -49,13 +50,13 @@
 
         <div class="flex-1 bg-[#dcdcdc] p-8 m-8 rounded-lg flex flex-col">
             
-            <!-- Dropdown Filter -->
-            <div class="mb-6">
-                <select class="border border-gray-400 rounded px-4 py-2 bg-white text-sm font-semibold shadow-sm focus:outline-none">
-                    <option value="Semester 1" {{ $semester == 'Semester 1' ? 'selected' : '' }}>Semester 1</option>
-                    <option value="Semester 2" {{ $semester == 'Semester 2' ? 'selected' : '' }}>Semester 2</option>
+            <!-- Wrapped in a GET form so the dropdown actually filters the database -->
+            <form method="GET" action="{{ route('portofolio') }}" class="mb-6">
+                <select name="semester" onchange="this.form.submit()" class="border border-gray-400 rounded px-4 py-2 bg-white text-sm font-semibold shadow-sm focus:outline-none">
+                    <option value="Semester 1" {{ $selectedSemester == 'Semester 1' ? 'selected' : '' }}>Semester 1</option>
+                    <option value="Semester 2" {{ $selectedSemester == 'Semester 2' ? 'selected' : '' }}>Semester 2</option>
                 </select>
-            </div>
+            </form>
 
             <!-- Dark Data Table -->
             <div class="bg-[#383838] rounded-md overflow-hidden shadow-lg border border-gray-600">
@@ -71,14 +72,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($student->grades as $index => $grade)
+                        <!-- Changed from $student->grades to $scores based on the Controller -->
+                        @forelse($scores as $index => $score)
                         <tr class="hover:bg-[#454545] transition-colors">
                             <td class="p-3 border border-gray-600 text-center">{{ $index + 1 }}</td>
-                            <td class="p-3 border border-gray-600">{{ $grade->mata_pelajaran }}</td>
-                            <td class="p-3 border border-gray-600 text-center">{{ $grade->nilai_tugas }}</td>
-                            <td class="p-3 border border-gray-600 text-center">{{ $grade->nilai_uts }}</td>
-                            <td class="p-3 border border-gray-600 text-center">{{ $grade->nilai_uas }}</td>
-                            <td class="p-3 border border-gray-600 text-center font-bold">{{ $grade->nilai_akhir }}</td>
+                            <!-- Pulls the subject name from the associated Teacher -->
+                            <td class="p-3 border border-gray-600">{{ $score->teacher->subject ?? 'Mapel' }}</td>
+                            <td class="p-3 border border-gray-600 text-center">{{ $score->nilai_tugas ?? '-' }}</td>
+                            <td class="p-3 border border-gray-600 text-center">{{ $score->nilai_uts ?? '-' }}</td>
+                            <td class="p-3 border border-gray-600 text-center">{{ $score->nilai_uas ?? '-' }}</td>
+                            <td class="p-3 border border-gray-600 text-center font-bold">{{ $score->nilai_akhir ?? '-' }}</td>
                         </tr>
                         @empty
                         <tr>
@@ -86,8 +89,8 @@
                         </tr>
                         @endforelse
                         
-                        <!-- Empty rows filler to match the Figma visual design height -->
-                        @for ($i = 0; $i < (10 - count($student->grades)); $i++)
+                        <!-- Dynamic Empty rows filler to match the Figma visual design height -->
+                        @for ($i = 0; $i < (10 - count($scores)); $i++)
                         <tr>
                             <td class="p-5 border border-gray-600"></td>
                             <td class="p-5 border border-gray-600"></td>

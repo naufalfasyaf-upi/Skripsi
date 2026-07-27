@@ -40,6 +40,10 @@ Route::middleware('auth')->group(function () {
 // 3. GURU ROUTES (teacher guard)
 Route::prefix('guru')->name('guru.')->middleware('auth:teacher')->group(function () {
     Route::get('/dashboard', [GuruDashboardController::class, 'index'])->name('dashboard');
+    
+    // Add these two lines for the Portfolio:
+    Route::get('/portfolio', [\App\Http\Controllers\Guru\PortfolioController::class, 'index'])->name('portfolio');
+    Route::post('/portfolio', [\App\Http\Controllers\Guru\PortfolioController::class, 'store'])->name('portfolio.store');
 });
 
 
