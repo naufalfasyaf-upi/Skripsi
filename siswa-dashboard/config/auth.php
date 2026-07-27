@@ -43,7 +43,13 @@ return [
             'provider' => 'users', // (This is technically your students now)
         ],
 
-        // ADD THIS ADMIN GUARD
+        // TEACHER GUARD
+        'teacher' => [
+            'driver' => 'session',
+            'provider' => 'teachers',
+        ],
+
+        // ADMIN GUARD
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
@@ -73,11 +79,18 @@ return [
             'model' => App\Models\Student::class,
         ],
 
-        // ADD THIS ADMIN PROVIDER
+        // TEACHER PROVIDER
+        'teachers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Teacher::class,
+        ],
+
+        // ADMIN PROVIDER
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
         ],
+        
     ],
 
     /*
@@ -102,6 +115,18 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'teachers' => [
+            'provider' => 'teachers',
+            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'admins' => [
+            'provider' => 'admins',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
             'expire' => 60,
             'throttle' => 60,

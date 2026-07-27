@@ -13,8 +13,8 @@
             <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-6">
                 <svg class="w-16 h-16 text-[#2a0a0a]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
             </div>
-            <h2 class="text-xl font-bold text-center">{{ $student->name ?? 'Student Name' }}</h2>
-            <p class="text-sm text-gray-300 mt-2">{{ $student->class_name ?? 'Class' }}</p>
+            <h2 class="text-xl font-bold text-center">{{ auth()->user()->name ?? 'Student Name' }}</h2>
+            <p class="text-sm text-gray-300 mt-2">{{ auth()->user()->class_name ?? 'Class' }}</p>
         </div>
 
         <nav class="flex-1 px-8 space-y-6 mt-8">
@@ -54,22 +54,22 @@
                 
                 <div class="bg-[#2a0a0a] text-white rounded-2xl p-6 h-32 shadow-lg flex flex-col justify-between">
                     <span class="font-bold text-lg">Semester</span>
-                    <span class="text-2xl font-semibold self-end">{{ $student->attendances->first()->semester ?? '-' }}</span>
+                    <span class="text-2xl font-semibold self-end">{{ auth()->user()->attendances->first()->semester ?? '-' }}</span>
                 </div>
                 
                 <div class="bg-[#2a0a0a] text-white rounded-2xl p-6 h-32 shadow-lg flex flex-col justify-between">
                     <span class="font-bold text-lg">Izin</span>
-                    <span class="text-2xl font-semibold self-end">{{ $student->attendances->first()->izin ?? '0' }}</span>
+                    <span class="text-2xl font-semibold self-end">{{ auth()->user()->attendances->first()->izin ?? '0' }}</span>
                 </div>
 
                 <div class="bg-[#2a0a0a] text-white rounded-2xl p-6 h-32 shadow-lg flex flex-col justify-between">
                     <span class="font-bold text-lg">Sakit</span>
-                    <span class="text-2xl font-semibold self-end">{{ $student->attendances->first()->sakit ?? '0' }}</span>
+                    <span class="text-2xl font-semibold self-end">{{ auth()->user()->attendances->first()->sakit ?? '0' }}</span>
                 </div>
 
                 <div class="bg-[#2a0a0a] text-white rounded-2xl p-6 h-32 shadow-lg flex flex-col justify-between">
                     <span class="font-bold text-lg">Tanpa Keterangan</span>
-                    <span class="text-2xl font-semibold self-end">{{ $student->attendances->first()->tanpa_keterangan ?? '0' }}</span>
+                    <span class="text-2xl font-semibold self-end">{{ auth()->user()->attendances->first()->tanpa_keterangan ?? '0' }}</span>
                 </div>
 
             </div>
