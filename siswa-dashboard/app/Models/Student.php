@@ -1,29 +1,10 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable; // Change this import
-use Illuminate\Notifications\Notifiable;
-
-class Student extends Authenticatable // Change 'Model' to 'Authenticatable'
-{
-    use HasFactory, Notifiable;
-
+class Student extends Authenticatable {
     protected $guarded = [];
-
-    // This ensures passwords are never accidentally returned in queries
-    protected $hidden = [
-        'password',
-    ];
-
-    public function attendances()
-    {
-        return $this->hasMany(Attendance::class);
-    }
-
-    public function grades()
-    {
-        return $this->hasMany(Grade::class);
-    }
+    public function classes() { return $this->belongsToMany(Kelas::class, 'class_student', 'student_id', 'class_id'); }
+    public function scores() { return $this->hasMany(Score::class); }
 }

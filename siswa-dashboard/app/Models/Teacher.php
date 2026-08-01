@@ -1,23 +1,10 @@
 <?php
 
 namespace App\Models;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
-class Teacher extends Authenticatable
-{
-    use HasFactory, Notifiable;
-
+class Teacher extends Authenticatable {
     protected $guarded = [];
-
-    protected $hidden = [
-        'password',
-    ];
-    
-    public function kelas()
-    {
-        return $this->hasOne(Kelas::class, 'teacher_id');
-    }
+    public function subject() { return $this->belongsTo(Subject::class); }
+    public function scores() { return $this->hasMany(Score::class); }
 }

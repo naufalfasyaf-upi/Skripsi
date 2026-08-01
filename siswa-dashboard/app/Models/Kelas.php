@@ -1,19 +1,11 @@
 <?php
 
 namespace App\Models;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Kelas extends Model
-{
-    use HasFactory;
-
+class Kelas extends Model {
+    protected $table = 'classes'; // Points to our new table name
     protected $guarded = [];
-
-    // A class belongs to one Homeroom Teacher
-    public function waliKelas()
-    {
-        return $this->belongsTo(Teacher::class, 'teacher_id');
-    }
+    public function students() { return $this->belongsToMany(Student::class, 'class_student', 'class_id', 'student_id'); }
+    public function scores() { return $this->hasMany(Score::class); }
 }

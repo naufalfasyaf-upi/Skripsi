@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('passkeys', function (Blueprint $table) {
+        Schema::create('class_student', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('name');
-            $table->string('credential_id')->unique();
-            $table->json('credential');
-            $table->timestamp('last_used_at')->nullable();
+            $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
+            $table->foreignId('class_id')->constrained('classes')->cascadeOnDelete();
             $table->timestamps();
-
-            $table->index('user_id');
+            
+            $table->unique(['student_id', 'class_id']);
         });
     }
 
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('passkeys');
+        Schema::dropIfExists('class_student');
     }
 };
