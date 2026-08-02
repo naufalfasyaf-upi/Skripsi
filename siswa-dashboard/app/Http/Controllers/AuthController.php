@@ -21,13 +21,13 @@ class AuthController extends Controller
         }
 
         // 2. Attempt Guru Login (Matches input to 'nip' column)
-        if (Auth::guard('teacher')->attempt(['name' => $credentials['username'], 'password' => $credentials['password']])) {
+        if (Auth::guard('teacher')->attempt(['nip' => $credentials['username'], 'password' => $credentials['password']])) {
             $request->session()->regenerate();
             return redirect()->route('guru.dashboard');
         }
 
         // 3. Attempt Student Login (Matches input to 'nisn' column)
-        if (Auth::guard('web')->attempt(['name' => $credentials['username'], 'password' => $credentials['password']])) {
+        if (Auth::guard('web')->attempt(['full_name' => $credentials['username'], 'password' => $credentials['password']])) {
             $request->session()->regenerate();
             return redirect()->route('dashboard'); // Adjust to 'siswa.dashboard' if you renamed the route
         }

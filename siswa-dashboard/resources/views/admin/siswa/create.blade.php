@@ -22,7 +22,7 @@
                 <div class="grid grid-cols-2 gap-6">
                     <div class="col-span-2">
                         <label class="block text-gray-700 font-bold mb-2">Nama Lengkap</label>
-                        <input type="text" name="name" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2a0a0a]" required>
+                        <input type="text" name="full_name" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2a0a0a]" required>
                     </div>
 
                     <div>
@@ -31,29 +31,39 @@
                         @error('nisn') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                     </div>
 
+                    <!-- Added the missing NIS input -->
                     <div>
-                        <label class="block text-gray-700 font-bold mb-2">Password Login</label>
-                        <input type="password" name="password" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2a0a0a]" required>
+                        <label class="block text-gray-700 font-bold mb-2">NIS</label>
+                        <input type="text" name="nis" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2a0a0a]" required>
+                        @error('nis') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                     </div>
 
+                    <!-- Changed name to class_id and value to $kelas->id -->
                     <div>
                         <label class="block text-gray-700 font-bold mb-2">Kelas</label>
-                        <select name="class_name" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2a0a0a]" required>
+                        <select name="class_id" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2a0a0a]" required>
                             <option value="" disabled selected>-- Pilih Kelas --</option>
                             @foreach($kelasList as $kelas)
-                                <option value="{{ $kelas->name }}">{{ $kelas->name }}</option>
+                                <option value="{{ $kelas->id }}">{{ $kelas->name }}</option>
                             @endforeach
                         </select>
                     </div>
 
                     <div>
-                        <label class="block text-gray-700 font-bold mb-2">Tempat Lahir</label>
-                        <input type="text" name="birth_place" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2a0a0a]">
+                        <label class="block text-gray-700 font-bold mb-2">Password Login</label>
+                        <input type="password" name="password" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2a0a0a]" required>
                     </div>
 
-                    <div class="col-span-2">
+                    <!-- Changed name to tempat_lahir -->
+                    <div>
+                        <label class="block text-gray-700 font-bold mb-2">Tempat Lahir</label>
+                        <input type="text" name="tempat_lahir" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2a0a0a]" required>
+                    </div>
+
+                    <!-- Changed name to tanggal_lahir -->
+                    <div>
                         <label class="block text-gray-700 font-bold mb-2">Tanggal Lahir</label>
-                        <input type="date" name="birthdate" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2a0a0a]">
+                        <input type="date" name="tanggal_lahir" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2a0a0a]" required>
                     </div>
                 </div>
 

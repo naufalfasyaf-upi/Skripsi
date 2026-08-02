@@ -1,66 +1,71 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
-use App\Models\Teacher; // <-- Add this import
 use Illuminate\Http\Request;
 
 class KelasController extends Controller
 {
+    // READ: Show all classes on the main table
     public function index()
     {
-        // Load the kelas with their assigned waliKelas to prevent N+1 query issues
-        $kelasList = Kelas::with('waliKelas')->get(); 
-        
-        // Get all teachers for the dropdown
-        $teachers = Teacher::all(); 
-
-        return view('admin.kelas.index', compact('kelasList', 'teachers'));
+        // Fetch all classes and pass them to the view
+        $kelasList = Kelas::all();
+        return view('admin.kelas.index', compact('kelasList'));
     }
-    // EDIT: Show the form to edit an existing class
-    public function edit(Kelas $kela) // Laravel automatically binds the parameter as $kela
+
+    // CREATE: Show the form to add a new class
+    public function create()
     {
-        $teachers = \App\Models\Teacher::all();
-        return view('admin.kelas.edit', compact('kela', 'teachers'));
+        return view('admin.kelas.create');
     }
 
-    // UPDATE: Save the changes to the database
-    public function update(Request $request, Kelas $kela)
-    {
-        $request->validate([
-            // Ensure the new name is unique, but ignore this exact class's ID
-            'name' => 'required|string|max:255|unique:kelas,name,' . $kela->id,
-            'teacher_id' => 'nullable|exists:teachers,id', // Validate the selected teacher
-        ]);
-
-        $kela->update([
-            'name' => $request->name,
-            'teacher_id' => $request->teacher_id,
-        ]);
-
-        return redirect()->route('admin.kelas.index')->with('success', 'Data kelas berhasil diperbarui!');
-    }
-
+    // STORE: Save the new class to the database
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255|unique:kelas,name',
-            'teacher_id' => 'nullable|exists:teachers,id', // Validate the selected teacher
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:classes,name',
+            'grade_level' => 'required|in:X,XI,XII', 
         ]);
 
         Kelas::create([
-            'name' => $request->name,
-            'teacher_id' => $request->teacher_id,
+            'name' => $validated['name'],
+            'grade_level' => $validated['grade_level'],
         ]);
 
-        return redirect()->route('admin.kelas.index')->with('success', 'Kelas berhasil ditambahkan!');
+        return redirect()->route('admin.kelas.index')->with('success', 'Kelas berhasil dibuat!');
     }
 
-    public function destroy(Kelas $kela)
+    // EDIT: Show the form to edit an existing class
+    public function edit($id)
     {
-        $kela->delete();
+        $kelas = Kelas::findOrFail($id);
+        return view('admin.kelas.edit', compact('kelas'));
+    }
+
+    // UPDATE: Save the changes to the database
+    public function update(Request $request, $id)
+    {
+        $kelas = Kelas::findOrFail($id);
+        
+        $validated = $request->validate([
+            // Ignores this specific class ID for the unique check so you can save without changing the name
+            'name' => 'required|string|max:255|unique:classes,name,' . $kelas->id,
+            'grade_level' => 'required|in:X,XI,XII',
+        ]);
+
+        $kelas->update($validated);
+
+        return redirect()->route('admin.kelas.index')->with('success', 'Kelas berhasil diperbarui!');
+    }
+
+    // DELETE: Remove a class
+    public function destroy($id)
+    {
+        $kelas = Kelas::findOrFail($id);
+        $kelas->delete();
+        
         return redirect()->route('admin.kelas.index')->with('success', 'Kelas berhasil dihapus!');
     }
 }

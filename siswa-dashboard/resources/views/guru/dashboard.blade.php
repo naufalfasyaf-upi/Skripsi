@@ -22,7 +22,7 @@
                 {{ auth('teacher')->user()->name ?? 'Naufal Fasya Faddillah' }}
             </h2>
             <p class="text-sm text-gray-300 mt-1">
-                {{ auth('teacher')->user()->subject ?? 'Bahasa Indonesia' }}
+                {{ auth('teacher')->user()->subject->name ?? 'Bahasa Indonesia' }}
             </p>
         </div>
 
@@ -38,10 +38,10 @@
                 <span>Portfolio</span>
             </a>
             <!-- Input Data -->
-            <a href="#" class="flex items-center space-x-4 text-white hover:text-gray-300 font-bold text-lg transition-colors">
+            <!-- <a href="#" class="flex items-center space-x-4 text-white hover:text-gray-300 font-bold text-lg transition-colors">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
                 <span>Input Data</span>
-            </a>
+            </a> -->
 
             <!-- LOGOUT BUTTON -->
             <form action="{{ route('logout') }}" method="POST" class="pt-6 mt-6 border-t border-[#4a4a4a] w-full">
@@ -65,9 +65,9 @@
         <div class="flex-1 bg-[#dcdcdc] p-8 m-8 mt-2 rounded-lg flex flex-col relative">
 
             <!-- 4 Top Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <!-- <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div class="bg-[#2a0a0a] text-white p-6 rounded-2xl shadow-lg h-32 flex items-start">
-                    <h3 class="text-lg font-semibold tracking-wide">Semester</h3>
+                    <h3 class="text-lg font-semibold tracking-wide">Portofolio</h3>
                 </div>
                 <div class="bg-[#2a0a0a] text-white p-6 rounded-2xl shadow-lg h-32 flex items-start">
                     <h3 class="text-lg font-semibold tracking-wide">Izin</h3>
@@ -78,14 +78,14 @@
                 <div class="bg-[#2a0a0a] text-white p-6 rounded-2xl shadow-lg h-32 flex items-start">
                     <h3 class="text-lg font-semibold tracking-wide">Tanpa Keterangan</h3>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Center Text Placeholder -->
-            <div class="flex-1 flex items-center justify-center">
+            <!-- <div class="flex-1 flex items-center justify-center">
                 <p class="text-xl font-bold text-black text-center">
                     Menu perwalian, ada menu untuk cek kelas
                 </p>
-            </div>
+            </div> -->
 
         </div>
     </main>

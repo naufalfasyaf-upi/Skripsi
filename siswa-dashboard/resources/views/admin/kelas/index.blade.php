@@ -72,14 +72,16 @@
                         @error('name') <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span> @enderror
                     </div>
                     
+                    <!-- Replaced Wali Kelas with Tingkat Kelas (Grade Level) -->
                     <div class="flex-1">
-                        <label class="block text-gray-700 font-semibold mb-2">Wali Kelas (Opsional)</label>
-                        <select name="teacher_id" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2a0a0a]">
-                            <option value="">-- Pilih Wali Kelas --</option>
-                            @foreach($teachers as $teacher)
-                                <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
-                            @endforeach
+                        <label class="block text-gray-700 font-semibold mb-2">Tingkat Kelas</label>
+                        <select name="grade_level" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#2a0a0a]" required>
+                            <option value="" disabled selected>-- Pilih Tingkat --</option>
+                            <option value="X">Kelas X</option>
+                            <option value="XI">Kelas XI</option>
+                            <option value="XII">Kelas XII</option>
                         </select>
+                        @error('grade_level') <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
                     <button type="submit" class="bg-[#2a0a0a] text-white font-bold py-2 px-6 rounded hover:bg-[#3d1515] transition-colors h-[42px]">
@@ -95,7 +97,8 @@
                         <tr class="bg-[#4a4a4a]">
                             <th class="p-4 border border-gray-600 font-semibold w-16 text-center">No</th>
                             <th class="p-4 border border-gray-600 font-semibold">Nama Kelas</th>
-                            <th class="p-4 border border-gray-600 font-semibold">Wali Kelas</th>
+                            <!-- Changed column header -->
+                            <th class="p-4 border border-gray-600 font-semibold w-40 text-center">Tingkat Kelas</th>
                             <th class="p-4 border border-gray-600 font-semibold w-32 text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -104,8 +107,9 @@
                         <tr class="hover:bg-[#454545] transition-colors">
                             <td class="p-4 border border-gray-600 text-center">{{ $index + 1 }}</td>
                             <td class="p-4 border border-gray-600 font-bold">{{ $kelas->name }}</td>
-                            <td class="p-4 border border-gray-600">
-                                {{ $kelas->waliKelas ? $kelas->waliKelas->name : 'Belum Ada' }}
+                            <!-- Displays the new grade_level column -->
+                            <td class="p-4 border border-gray-600 text-center">
+                                {{ $kelas->grade_level }}
                             </td>
                             <td class="p-4 border border-gray-600 text-center flex justify-center gap-2">
                                 <!-- Edit Button -->
@@ -125,7 +129,8 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="3" class="p-6 border border-gray-600 text-center text-gray-400">Belum ada data kelas.</td>
+                            <!-- Updated colspan to 4 -->
+                            <td colspan="4" class="p-6 border border-gray-600 text-center text-gray-400">Belum ada data kelas.</td>
                         </tr>
                         @endforelse
                     </tbody>

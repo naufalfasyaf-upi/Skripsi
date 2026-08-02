@@ -4,49 +4,68 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Score;
-use Illuminate\Support\Facades\Auth;
 
 class AnalisisController extends Controller
 {
     public function index()
     {
-        $student = Auth::user();
+        $student = auth()->user();
         
-        // Fetch all scores for this student across all years
-        $allScores = Score::with('teacher')->where('student_id', $student->id)->get();
+        // Fetch all scores for this student, including the teacher, subject, and class data
+        $scores = Score::with(['teacher.subject', 'kelas'])
+            ->where('student_id', $student->id)
+            ->get();
 
         $analisisData = [];
 
-        foreach ($allScores as $score) {
-            $subject = $score->teacher->subject ?? 'Unknown';
+        foreach ($scores as $score) {
+            // Safely get the subject name
+            $subjectName = $score->teacher->subject->name ?? 'Mata Pelajaran';
             
-            // Extract the grade level (e.g., "X", "XI", "XII" from "XII IPA 2")
-            $gradeLevel = explode(' ', $score->class_name)[0]; 
-            $semesterName = $score->semester; // "Semester 1" or "Semester 2"
-
-            // Map Class + Semester to a 1-6 continuous scale
-            $mappedSemester = 1;
-            if ($gradeLevel === 'X') {
-                $mappedSemester = ($semesterName === 'Semester 1') ? 1 : 2;
-            } elseif ($gradeLevel === 'XI') {
-                $mappedSemester = ($semesterName === 'Semester 1') ? 3 : 4;
-            } elseif ($gradeLevel === 'XII') {
-                $mappedSemester = ($semesterName === 'Semester 1') ? 5 : 6;
-            }
-
-            // Group by subject and assign the final grade to the correct mapped semester
-            if (!isset($analisisData[$subject])) {
-                $analisisData[$subject] = [
-                    1 => '-', 2 => '-', 3 => '-', 4 => '-', 5 => '-', 6 => '-',
-                    'performa' => '0%'
+            // If this is the first time seeing this subject, create an empty row for it
+            if (!isset($analisisData[$subjectName])) {
+                $analisisData[$subjectName] = [
+                    1 => '-', 2 => '-', 3 => '-', 4 => '-', 5 => '-', 6 => '-', 'performa' => '-'
                 ];
             }
 
-            $analisisData[$subject][$mappedSemester] = $score->nilai_akhir ?? '-';
+            // Determine Absolute Semester (1 through 6)
+            $gradeLevel = $score->kelas->grade_level ?? '';
+            $semesterEnum = $score->semester; // '1' or '2'
+            $absoluteSemester = null;
+
+            if ($gradeLevel === 'X') {
+                $absoluteSemester = ($semesterEnum == '1') ? 1 : 2;
+            } elseif ($gradeLevel === 'XI') {
+                $absoluteSemester = ($semesterEnum == '1') ? 3 : 4;
+            } elseif ($gradeLevel === 'XII') {
+                $absoluteSemester = ($semesterEnum == '1') ? 5 : 6;
+            }
+
+            // If we found a valid semester slot, insert the "Nilai Akhir"
+            if ($absoluteSemester && $score->nilai_akhir !== null) {
+                $analisisData[$subjectName][$absoluteSemester] = $score->nilai_akhir;
+            }
         }
 
-        // Optional: Calculate "Performa" (e.g., trend between Sem 1 and current)
-        // For now, we pass the structured data to the view
+        // Calculate "Performa" (Average score across all available semesters)
+        foreach ($analisisData as $subject => &$data) {
+            $total = 0;
+            $count = 0;
+            
+            for ($i = 1; $i <= 6; $i++) {
+                if ($data[$i] !== '-') {
+                    $total += $data[$i];
+                    $count++;
+                }
+            }
+            
+            if ($count > 0) {
+                // Calculates the average, rounded to 1 decimal
+                $data['performa'] = round($total / $count, 1); 
+            }
+        }
+
         return view('analisis', compact('analisisData'));
     }
 }

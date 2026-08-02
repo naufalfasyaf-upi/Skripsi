@@ -4,24 +4,38 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Score;
-use Illuminate\Support\Facades\Auth;
 
 class PortfolioController extends Controller
 {
     public function index(Request $request)
     {
-        // Get the currently logged-in student
+        // 1. Get the currently logged-in student
         $student = auth()->user();
+        
+        // 2. Fetch only the classes this specific student has ever been assigned to
+        $classes = $student->classes; 
 
-        // Check if the student selected a semester to view, default to "Semester 1"
-        $selectedSemester = $request->get('semester', 'Semester 1');
+        // 3. Grab the selected dropdown values from the URL
+        $selectedClassId = $request->input('class_id');
+        $selectedSemester = $request->input('semester');
 
-        // Fetch scores only for this specific student, for the chosen semester
-        $scores = Score::with('teacher') // Eager load the teacher data
-            ->where('student_id', $student->id)
-            ->where('semester', $selectedSemester)
-            ->get();
+        $scores = collect();
 
-        return view('portofolio', compact('scores', 'selectedSemester'));
+        // 4. If they selected both a class and a semester, fetch their scores!
+        if ($selectedClassId && $selectedSemester) {
+            // We use 'with' to eager-load the Teacher and Subject data so we can display the names easily
+            $scores = Score::with('teacher.subject')
+                ->where('student_id', $student->id)
+                ->where('class_id', $selectedClassId)
+                ->where('semester', $selectedSemester)
+                ->get();
+        }
+
+        return view('portfolio', compact(
+            'classes', 
+            'selectedClassId', 
+            'selectedSemester', 
+            'scores'
+        ));
     }
 }

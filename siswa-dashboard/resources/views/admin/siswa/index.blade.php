@@ -87,24 +87,43 @@
                 <table class="w-full text-left border-collapse text-white text-sm">
                     <thead>
                         <tr class="bg-[#4a4a4a]">
-                            <th class="p-3 border border-gray-600 font-semibold w-16 text-center">No</th>
+                            <th class="p-3 border border-gray-600 font-semibold w-12 text-center">No</th>
                             <th class="p-3 border border-gray-600 font-semibold">Nama</th>
-                            <th class="p-3 border border-gray-600 font-semibold w-40 text-center">Nomor Induk</th>
-                            <th class="p-3 border border-gray-600 font-semibold w-40 text-center">Kelas</th>
-                            <th class="p-3 border border-gray-600 font-semibold w-24 text-center"></th>
-                            <th class="p-3 border border-gray-600 font-semibold w-24 text-center"></th>
+                            <th class="p-3 border border-gray-600 font-semibold w-32 text-center">Nomor Induk</th>
+                            
+                            <!-- 3 New Columns for the Grades -->
+                            <th class="p-3 border border-gray-600 font-semibold w-24 text-center">Kelas X</th>
+                            <th class="p-3 border border-gray-600 font-semibold w-24 text-center">Kelas XI</th>
+                            <th class="p-3 border border-gray-600 font-semibold w-24 text-center">Kelas XII</th>
+                            
+                            <th class="p-3 border border-gray-600 font-semibold w-20 text-center"></th>
+                            <th class="p-3 border border-gray-600 font-semibold w-20 text-center"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($students as $index => $student)
                         <tr class="hover:bg-[#454545] transition-colors">
                             <td class="p-3 border border-gray-600 text-center">{{ $index + 1 }}</td>
-                            <td class="p-3 border border-gray-600">{{ $student->name }}</td>
-                            <!-- Displaying Nomor Induk (NISN) and Kelas as requested in the design notes -->
+                            <td class="p-3 border border-gray-600">{{ $student->full_name }}</td>
                             <td class="p-3 border border-gray-600 text-center">{{ $student->nisn }}</td>
-                            <td class="p-3 border border-gray-600 text-center">{{ $student->class_name }}</td>
+                            
+                            <!-- Displays the exact class they took in Class X (or '-' if they don't have one) -->
+                            <td class="p-3 border border-gray-600 text-center font-medium">
+                                {{ $student->classes->where('grade_level', 'X')->first()->name ?? '-' }}
+                            </td>
+                            
+                            <!-- Displays the exact class they took in Class XI (or '-' if they don't have one) -->
+                            <td class="p-3 border border-gray-600 text-center font-medium">
+                                {{ $student->classes->where('grade_level', 'XI')->first()->name ?? '-' }}
+                            </td>
+                            
+                            <!-- Displays the exact class they took in Class XII (or '-' if they don't have one) -->
+                            <td class="p-3 border border-gray-600 text-center font-medium">
+                                {{ $student->classes->where('grade_level', 'XII')->first()->name ?? '-' }}
+                            </td>
+                            
                             <td class="p-4 border border-gray-600 text-center">
-                                <a href="{{ route('admin.siswa.edit', $student->id) }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-5 rounded transition-colors shadow-sm text-sm inline-block">
+                                <a href="{{ route('admin.siswa.edit', $student->id) }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded transition-colors shadow-sm text-sm inline-block">
                                     Edit
                                 </a>
                             </td>
@@ -112,7 +131,7 @@
                                 <form action="{{ route('admin.siswa.destroy', $student->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus siswa ini? Data yang dihapus tidak dapat dikembalikan.');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 px-4 rounded transition-colors shadow-sm text-sm">
+                                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-3 rounded transition-colors shadow-sm text-sm">
                                         Hapus
                                     </button>
                                 </form>
@@ -120,9 +139,11 @@
                         </tr>
                         @endforeach
                         
-                        <!-- Empty Rows to match the visual height of the Figma design -->
+                        <!-- Fixed the Empty Rows loop to match our 8 columns now! -->
                         @for ($i = 0; $i < (8 - count($students)); $i++)
                         <tr>
+                            <td class="p-5 border border-gray-600"></td>
+                            <td class="p-5 border border-gray-600"></td>
                             <td class="p-5 border border-gray-600"></td>
                             <td class="p-5 border border-gray-600"></td>
                             <td class="p-5 border border-gray-600"></td>

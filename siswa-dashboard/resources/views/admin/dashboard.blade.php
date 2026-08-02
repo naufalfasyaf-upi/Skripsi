@@ -65,14 +65,50 @@
         <div class="flex-1 bg-[#dcdcdc] p-8 m-8 mt-2 rounded-lg flex gap-6 items-start">
             
             <!-- Guru Card -->
-            <a href="#" class="bg-[#2a0a0a] text-white w-64 h-32 rounded-2xl p-5 shadow-lg hover:bg-[#3d1515] transition-all transform hover:-translate-y-1 flex flex-col">
+            <a href="{{ route('admin.guru.index') }}" class="bg-[#2a0a0a] text-white w-64 h-32 rounded-2xl p-5 shadow-lg hover:bg-[#3d1515] transition-all transform hover:-translate-y-1 flex flex-col">
                 <span class="font-bold text-lg tracking-wide">Guru</span>
             </a>
 
             <!-- Siswa Card -->
-            <a href="#" class="bg-[#2a0a0a] text-white w-64 h-32 rounded-2xl p-5 shadow-lg hover:bg-[#3d1515] transition-all transform hover:-translate-y-1 flex flex-col">
+            <a href="{{ route('admin.siswa.index') }}" class="bg-[#2a0a0a] text-white w-64 h-32 rounded-2xl p-5 shadow-lg hover:bg-[#3d1515] transition-all transform hover:-translate-y-1 flex flex-col">
                 <span class="font-bold text-lg tracking-wide">Siswa</span>
             </a>
+
+            <!-- Kelas Card -->
+            <a href="{{ route('admin.kelas.index') }}" class="bg-[#2a0a0a] text-white w-64 h-32 rounded-2xl p-5 shadow-lg hover:bg-[#3d1515] transition-all transform hover:-translate-y-1 flex flex-col">
+                <span class="font-bold text-lg tracking-wide">Kelas</span>
+            </a>
+
+            <!-- Mapel Card -->
+            <a href="{{ route('admin.mapel.index') }}" class="bg-[#2a0a0a] text-white w-64 h-32 rounded-2xl p-5 shadow-lg hover:bg-[#3d1515] transition-all transform hover:-translate-y-1 flex flex-col">
+                <span class="font-bold text-lg tracking-wide">Mapel</span>
+            </a>
+            <!-- Card: Total Siswa -->
+            <!-- <a href="{{ route('admin.siswa.index') }}" class="bg-[#2a0a0a] text-white rounded-2xl p-6 h-36 shadow-lg flex flex-col justify-between hover:bg-[#3a1515] hover:-translate-y-1 transition-all cursor-pointer">
+                <span class="font-bold text-lg text-gray-300">Total Siswa</span>
+                <div class="flex items-center justify-between mt-auto">
+                    <svg class="w-10 h-10 text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    <span class="text-4xl font-bold">{{ $totalSiswa ?? 0 }}</span>
+                </div>
+            </a> -->
+
+            <!-- Card: Total Guru (This is the one you requested!) -->
+            <!-- <a href="{{ route('admin.guru.index') }}" class="bg-[#2a0a0a] text-white rounded-2xl p-6 h-36 shadow-lg flex flex-col justify-between hover:bg-[#3a1515] hover:-translate-y-1 transition-all cursor-pointer">
+                <span class="font-bold text-lg text-gray-300">Total Guru</span>
+                <div class="flex items-center justify-between mt-auto">
+                    <svg class="w-10 h-10 text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    <span class="text-4xl font-bold">{{ $totalGuru ?? 0 }}</span>
+                </div>
+            </a> -->
+
+            <!-- Card: Total Kelas -->
+            <!-- <a href="{{ route('admin.kelas.index') }}" class="bg-[#2a0a0a] text-white rounded-2xl p-6 h-36 shadow-lg flex flex-col justify-between hover:bg-[#3a1515] hover:-translate-y-1 transition-all cursor-pointer border-l-4 border-blue-500">
+                <span class="font-bold text-lg text-gray-300">Total Kelas</span>
+                <div class="flex items-center justify-between mt-auto">
+                    <svg class="w-10 h-10 text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+                    <span class="text-4xl font-bold">{{ $totalKelas ?? 0 }}</span>
+                </div>
+            </a> -->
 
         </div>
     </main>

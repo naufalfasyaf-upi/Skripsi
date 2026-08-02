@@ -89,7 +89,7 @@
                             <td class="p-4 border border-gray-600 text-center">{{ $index + 1 }}</td>
                             <td class="p-4 border border-gray-600">{{ $teacher->name }}</td>
                             <td class="p-4 border border-gray-600">{{ $teacher->nip }}</td>
-                            <td class="p-4 border border-gray-600">{{ $teacher->subject }}</td>
+                            <td class="p-4 border border-gray-600">{{ $teacher->subject->name ?? 'Belum ada mapel' }}</td>
                             <td class="p-4 border border-gray-600 text-center">
                                 <a href="{{ route('admin.guru.edit', $teacher->id) }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-5 rounded transition-colors shadow-sm text-sm inline-block">
                                     Edit

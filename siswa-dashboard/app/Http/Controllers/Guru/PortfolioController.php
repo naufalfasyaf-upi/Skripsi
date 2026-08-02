@@ -5,64 +5,77 @@ namespace App\Http\Controllers\Guru;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Kelas;
-use App\Models\Student;
 use App\Models\Score;
-use Illuminate\Support\Facades\Auth;
 
 class PortfolioController extends Controller
 {
     public function index(Request $request)
     {
-        $kelasList = \App\Models\Kelas::all();
-        $selectedKelas = $request->get('kelas');
-        $selectedSemester = $request->get('semester');
-
+        $kelasList = Kelas::all();
+        $selectedClassId = $request->input('class_id');
+        $selectedSemester = $request->input('semester'); // e.g., "Semester 1"
+        
         $students = collect();
         $scores = collect();
+        
+        $teacher = auth('teacher')->user();
 
-        if ($selectedKelas && $selectedSemester) {
-            $students = \App\Models\Student::where('class_name', $selectedKelas)->get();
-            
-            $scores = \App\Models\Score::where('teacher_id', Auth::guard('teacher')->id())
-                ->where('semester', $selectedSemester)
-                ->where('class_name', $selectedKelas) // STRICT FILTER: Ensures Class X and Class XI don't mix
-                ->whereIn('student_id', $students->pluck('id'))
-                ->get()
-                ->keyBy('student_id');
+        if ($selectedClassId && $selectedSemester) {
+            $kelas = Kelas::findOrFail($selectedClassId);
+            $students = $kelas->students; 
+
+            // Convert "Semester 1" to just "1" to match your Database ENUM
+            $enumSemester = str_replace('Semester ', '', $selectedSemester);
+
+            // Fetch existing scores using teacher_id and class_id
+            $scores = Score::where('class_id', $selectedClassId)
+                           ->where('teacher_id', $teacher->id)
+                           ->where('semester', $enumSemester)
+                           ->get()
+                           ->keyBy('student_id');
         }
 
-        return view('guru.portfolio', compact('kelasList', 'selectedKelas', 'selectedSemester', 'students', 'scores'));
+        return view('guru.portfolio', compact(
+            'kelasList', 'selectedClassId', 'selectedSemester', 'students', 'scores'
+        ));
     }
 
     public function store(Request $request)
     {
-        $teacherId = Auth::guard('teacher')->id();
-        $semester = $request->semester;
-        $className = $request->kelas; // We need to pass this from the form!
-        $scoresData = $request->scores; 
+        // 1. Validate the incoming request
+        $request->validate([
+            'class_id' => 'required|exists:classes,id',
+            'semester' => 'required|string',
+            'scores'   => 'required|array',
+        ]);
 
-        if (!$scoresData || !$semester || !$className) {
-            return back()->with('error', 'Data tidak valid.');
+        $teacher = auth('teacher')->user();
+
+        // 2. Convert "Semester 1" to just "1" to match your Database ENUM
+        $enumSemester = str_replace('Semester ', '', $request->semester);
+
+        // 3. Loop through the array of scores sent from the HTML table
+        foreach ($request->scores as $studentId => $scoreData) {
+            
+            // 4. Update if exists, Create if it doesn't!
+            Score::updateOrCreate(
+                [
+                    // Search criteria matching your schema's unique constraint
+                    'student_id' => $studentId,
+                    'teacher_id' => $teacher->id,
+                    'class_id'   => $request->class_id,
+                    'semester'   => $enumSemester,
+                ],
+                [
+                    // Data to save
+                    'nilai_tugas' => $scoreData['nilai_tugas'] ?? null,
+                    'nilai_uts'   => $scoreData['nilai_uts'] ?? null,
+                    'nilai_uas'   => $scoreData['nilai_uas'] ?? null,
+                    'nilai_akhir' => $scoreData['nilai_akhir'] ?? null,
+                ]
+            );
         }
 
-        foreach ($scoresData as $studentId => $data) {
-            if ($data['nilai_tugas'] != null || $data['nilai_uts'] != null || $data['nilai_uas'] != null || $data['nilai_akhir'] != null) {
-                Score::updateOrCreate(
-                    [
-                        'student_id' => $studentId,
-                        'teacher_id' => $teacherId,
-                        'class_name' => $className, // Saves "X IPA 2" or "XI IPA 2" historically
-                        'semester' => $semester,
-                    ],
-                    [
-                        'nilai_tugas' => $data['nilai_tugas'],
-                        'nilai_uts' => $data['nilai_uts'],
-                        'nilai_uas' => $data['nilai_uas'],
-                        'nilai_akhir' => $data['nilai_akhir'],
-                    ]
-                );
-            }
-        }
-        return back()->with('success', 'Nilai berhasil disimpan!');
+        return redirect()->back()->with('success', 'Berhasil menyimpan nilai untuk kelas ini!');
     }
 }
