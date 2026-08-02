@@ -27,7 +27,7 @@ class AuthController extends Controller
         }
 
         // 3. Attempt Student Login (Matches input to 'nisn' column)
-        if (Auth::guard('web')->attempt(['full_name' => $credentials['username'], 'password' => $credentials['password']])) {
+        if (Auth::guard('web')->attempt(['nisn' => $credentials['username'], 'password' => $credentials['password']])) {
             $request->session()->regenerate();
             return redirect()->route('dashboard'); // Adjust to 'siswa.dashboard' if you renamed the route
         }
