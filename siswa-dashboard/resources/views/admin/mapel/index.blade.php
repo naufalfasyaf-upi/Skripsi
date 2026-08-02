@@ -8,9 +8,8 @@
 </head>
 <body class="bg-gray-100 font-sans antialiased flex h-screen overflow-hidden">
 
-    <!-- Sidebar (Skipped full sidebar for brevity, use your standard sidebar here!) -->
-    <aside class="w-72 bg-[#2a0a0a] text-white flex flex-col h-full shrink-0">
-        <!-- Paste your standard Sidebar code here -->
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-72 bg-[#2a0a0a] text-white flex flex-col h-full shrink-0 transition-all duration-300 ease-in-out">
         <div class="flex flex-col items-center justify-center p-8 mt-12">
             <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-6 shadow-md">
                 <svg class="w-16 h-16 text-[#2a0a0a]" fill="currentColor" viewBox="0 0 24 24">
@@ -19,6 +18,7 @@
             </div>
             <h2 class="text-xl font-bold text-center tracking-wide">Admin</h2>
         </div>
+
         <nav class="flex-1 px-8 space-y-6 mt-8">
             <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-4 text-white hover:text-gray-300 font-bold text-lg transition-colors">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -49,8 +49,20 @@
         </nav>
     </aside>
 
+
+    
     <!-- Main Content -->
     <main class="flex-1 flex flex-col bg-white overflow-y-auto">
+
+        <!-- Top Navbar -->
+        <header class="h-20 flex items-center px-8 w-full bg-white">
+            <button id="sidebarToggle" class="text-black focus:outline-none hover:text-gray-600 transition-colors">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </header>
+
         <header class="h-20 flex items-center px-8 w-full bg-white shadow-sm">
             <h1 class="text-2xl font-bold text-[#2a0a0a]">Manajemen Mata Pelajaran</h1>
         </header>
@@ -114,6 +126,13 @@
             </div>
         </div>
     </main>
-
+    <!-- Sidebar Toggle Script -->
+    <script>
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            // Toggling -ml-72 slides the sidebar out of view to the left
+            sidebar.classList.toggle('-ml-72');
+        });
+    </script>
 </body>
 </html>

@@ -9,7 +9,7 @@
 <body class="bg-gray-100 font-sans antialiased flex h-screen overflow-hidden">
 
     <!-- Sidebar -->
-    <aside class="w-72 bg-[#2a0a0a] text-white flex flex-col h-full shrink-0">
+    <aside id="sidebar" class="w-72 bg-[#2a0a0a] text-white flex flex-col h-full shrink-0 transition-all duration-300 ease-in-out">
         <div class="flex flex-col items-center justify-center p-8 mt-12">
             <!-- User Profile Icon -->
             <div class="mb-4">
@@ -56,6 +56,14 @@
 
     <!-- Main Content -->
     <main class="flex-1 flex flex-col bg-white overflow-y-auto">
+         <!-- Top Navbar -->
+        <header class="h-20 flex items-center px-8 w-full bg-white">
+            <button id="sidebarToggle" class="text-black focus:outline-none hover:text-gray-600 transition-colors">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </header>
         <header class="h-20 flex items-center px-8 w-full bg-white">
             <button class="text-black focus:outline-none">
                 <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -93,6 +101,13 @@
 
         </div>
     </main>
-
+    <!-- Sidebar Toggle Script -->
+    <script>
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            // Toggling -ml-72 slides the sidebar out of view to the left
+            sidebar.classList.toggle('-ml-72');
+        });
+    </script>
 </body>
 </html>

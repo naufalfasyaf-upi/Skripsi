@@ -9,7 +9,7 @@
 <body class="bg-gray-100 font-sans antialiased flex h-screen overflow-hidden">
 
     <!-- Sidebar -->
-    <aside class="w-72 bg-[#2a0a0a] text-white flex flex-col h-full shrink-0">
+    <aside id="sidebar" class="w-72 bg-[#2a0a0a] text-white flex flex-col h-full shrink-0 transition-all duration-300 ease-in-out">
         <div class="flex flex-col items-center justify-center p-8 mt-12">
             <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-6 shadow-md">
                 <svg class="w-16 h-16 text-[#2a0a0a]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
@@ -46,6 +46,14 @@
     </aside>
 
     <main class="flex-1 flex flex-col bg-white overflow-y-auto">
+         <!-- Top Navbar -->
+        <header class="h-20 flex items-center px-8 w-full bg-white">
+            <button id="sidebarToggle" class="text-black focus:outline-none hover:text-gray-600 transition-colors">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </header>
         <header class="h-20 flex items-center px-8 w-full bg-white shadow-sm">
             <h1 class="text-2xl font-bold text-[#2a0a0a]">Analisis Akademik (Semester 1 - 6)</h1>
         </header>
@@ -100,6 +108,13 @@
 
         </div>
     </main>
-
+    <!-- Sidebar Toggle Script -->
+    <script>
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            // Toggling -ml-72 slides the sidebar out of view to the left
+            sidebar.classList.toggle('-ml-72');
+        });
+    </script>
 </body>
 </html>
