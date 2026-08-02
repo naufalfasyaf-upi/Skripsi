@@ -79,7 +79,11 @@
                     <h3 class="text-lg font-semibold tracking-wide">Tanpa Keterangan</h3>
                 </div>
             </div> -->
-
+            <!-- A nice welcome banner to replace the empty space -->
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
+                <h2 class="text-3xl font-bold text-[#2a0a0a] mb-2">Selamat Datang, {{ auth()->user()->name }}!</h2>
+                <p class="text-gray-600 text-lg">Gunakan menu di sebelah kiri untuk memberikan nilai kepada siswa Anda.</p>
+            </div>
             <!-- Center Text Placeholder -->
             <!-- <div class="flex-1 flex items-center justify-center">
                 <p class="text-xl font-bold text-black text-center">
